@@ -1,0 +1,10 @@
+﻿{
+    "profiles": {
+      "Tp4partie4 (Package)": {
+        "commandName": "MsixPackage"
+      },
+      "Tp4partie4 (Unpackaged)": {
+        "commandName": "Project"
+      }
+    }
+}
