@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Xaml;
-
+using Microsoft.UI.Xaml.Controls;
 using Tp4partie4.Activation;
 using Tp4partie4.Contracts.Services;
 using Tp4partie4.Core.Contracts.Services;
@@ -41,7 +41,13 @@ public partial class App : Application
     public static WindowEx MainWindow { get; } = new MainWindow();
 
     public static UIElement? AppTitlebar { get; set; }
-
+    public static FrameworkElement MainRoot
+    {
+        get
+        {
+            return MainWindow.Content as FrameworkElement;
+        }
+    }
     public App()
     {
         InitializeComponent();
@@ -101,5 +107,17 @@ public partial class App : Application
         base.OnLaunched(args);
 
         await App.GetService<IActivationService>().ActivateAsync(args);
+    }
+    public static async void MessageAsync(string titre, string content)
+    {
+        ContentDialog contentDialog = new ContentDialog
+        {
+            Title = titre,
+            Content = content,
+            CloseButtonText = "Ok"
+        };
+        contentDialog.XamlRoot = MainRoot.XamlRoot;
+
+        ContentDialogResult result = await contentDialog.ShowAsync();
     }
 }
